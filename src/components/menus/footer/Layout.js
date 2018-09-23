@@ -23,19 +23,8 @@ function mapDispatchToProps(dispatch: Function): Object {
 }
 
 class FooterMenu extends React.Component {
-    componentDidMount() {
-        // this.props.navigation.navigate('MyProfile');
-        console.log("props:", this.props)
-    }
-
-    componentWillReceiveProps(a, b) {
-        console.log("willllllllllll===", {a,b});
-    }
-
     onPressItem = (menuKey) => {
         this.props.navigation.navigate(menuKey);
-        this.props.actGetBadge();
-        console.log("n")
     }
 
     render() {
