@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import {Platform, StyleSheet, StatusBar,View} from 'react-native';
 
-import { Main as Menu } from './src/components/menus/drawer/Main';
+import { Main as DrawerMenu } from './src/components/menus/drawer/Main';
+
+// redux
+import { Provider } from 'react-redux';
+import configureStore from './src/store';
+export const store = configureStore();
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -12,13 +16,16 @@ const instructions = Platform.select({
 });
 
 type Props = {};
+
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Ahihi đồ ngốck</Text>
-        <Menu/>
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
+          <DrawerMenu/>
+        </View>
+      </Provider>
     );
   }
 }

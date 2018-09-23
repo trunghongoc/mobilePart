@@ -1,4 +1,7 @@
-export const primaryColor = '#3498db';
+export const primaryColor = '#3498db'; // xanh da trời
+// export const primaryColor = '#e67e22'; // cam
+// export const primaryColor = '#9b59b6'; // tím
+
 export const primaryColorLight = '#74b9ff';
 export const yellowLight = '#f6e58d';
 export const black = '#000000';

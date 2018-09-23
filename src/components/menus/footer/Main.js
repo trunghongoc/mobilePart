@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
+import { createBottomTabNavigator, addNavigationHelpers } from 'react-navigation';
+
 import Home from './../../../screens/Home';
 import MyProfile from './../../../screens/MyProfile';
-import * as Icon from './../../../icons/SimpleLine';
+import News from './../../../screens/News';
+import Notifications from './../../../screens/Notifications';
 import * as Config from './../../../configs/Config';
 
-import { createBottomTabNavigator } from 'react-navigation';
+import Layout from './Layout';
 
 export const Main = createBottomTabNavigator({
         Home: Home,
         MyProfile: MyProfile,
-        // News: News,
-        // Notifications: Notifications,
+        News: News,
+        Notifications: Notifications,
     }, {   
-    navigationOptions: ({ navigation }) => ({
+    /*navigationOptions: ({ navigation, chym }) => ({
         tabBarIcon: ({ focused, tintColor }) => {
+            alert(this)
             const { routeName } = navigation.state;
             if (routeName === 'Home')
                 return <Icon.PieChart color={tintColor} size={24}/>;
@@ -27,7 +31,8 @@ export const Main = createBottomTabNavigator({
                 return <Icon.PieChart color={tintColor} size={24}/>;
         },
         
-    }),
+    }),*/
+    tabBarComponent: (props) => <Layout {...props} />,
     tabBarOptions: {
         activeTintColor: Config.primaryColor,
         inactiveTintColor: Config.grayM,  

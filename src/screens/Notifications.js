@@ -3,14 +3,14 @@ import { Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import withHeaderMenu from './LayoutWithHeader';
 
-class MyProfile extends React.Component {
+class Notifications extends React.Component {
     render() {
         return(
             <View>
-                <Text>My profile</Text>
+                <Text>Notifications</Text>
             </View>
         );
     }
 }
 
-export default withHeaderMenu(MyProfile);
+export default withHeaderMenu(Notifications);
