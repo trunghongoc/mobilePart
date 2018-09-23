@@ -40,8 +40,9 @@ const menuReducer = handleActions({
         return state;
     },
     [ActionTypes.SET_BADGE_MENU]: (state: Object, action: Object): any => {
-        state.badgeOf[action.payload.menuKey] = action.payload.number;
-        return state;
+        let newState = state;
+        newState.badgeOf[action.payload.menuKey] = action.payload.number;
+        return { ...state, ...newState };
     },
 }, initialState)
 

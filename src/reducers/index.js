@@ -6,4 +6,4 @@ const rootReducer = combineReducers({
     menuReducer,
 })
 
-export default rootReducer
+export default rootReducer;
