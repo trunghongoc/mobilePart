@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, StatusBar,View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, StatusBar, View} from 'react-native';
 
-import { Main as DrawerMenu } from './src/components/menus/drawer/Main';
+import DrawerWithDetect from './src/components/menus/drawer/DrawerWithDetect';
 
 // redux
 import { Provider } from 'react-redux';
@@ -23,7 +23,7 @@ export default class App extends Component<Props> {
       <Provider store={store}>
         <View style={styles.container}>
           <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
-          <DrawerMenu/>
+          <DrawerWithDetect/>
         </View>
       </Provider>
     );

@@ -1,11 +1,13 @@
 // @flow
 import { combineReducers } from 'redux';
-import menuReducer from './menuReducer';
 import fetchDReducer from './testSagaReducer';
+import menuReducer from './menuReducer';
+import navigationReducer from './navigationReducer';
 
 const rootReducer = combineReducers({
+    fetchDReducer,
     menuReducer,
-    fetchDReducer
+    navigationReducer
 })
 
 export default rootReducer;
