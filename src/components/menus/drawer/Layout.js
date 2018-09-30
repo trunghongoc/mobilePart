@@ -14,35 +14,35 @@ export default class Layout extends Component {
         }
     )
 
-  render() {
-    return (
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <ImageBackground source={require('./../../../images/diamond_bg.jpg')} style={styles.bg}>
-                    <View style={styles.imageAvatarWrap}>
-                        <Image
-                            source={require('./../../../images/man.png')}
-                            style={styles.imageAvatar}
-                        />
-                    </View>
-                    <View style={styles.fullName}>
-                        <Text style={styles.pFullName}>Trung Hồ  Ngọc</Text>
-                    </View>
-                </ImageBackground>
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={styles.headerContainer}>
+                    <ImageBackground source={require('./../../../images/diamond_bg.jpg')} style={styles.bg}>
+                        <View style={styles.imageAvatarWrap}>
+                            <Image
+                                source={require('./../../../images/man.png')}
+                                style={styles.imageAvatar}
+                            />
+                        </View>
+                        <View style={styles.fullName}>
+                            <Text style={styles.pFullName}>Trung Hồ  Ngọc</Text>
+                        </View>
+                    </ImageBackground>
+                </View>
+                <View style={styles.screenContainer}>
+                    <Item
+                        pressEvent={this.navigateToScreen('Home')}
+                        IconType={<Icon.Globe/>}
+                        text="Trang chủ"/>
+                    <Item
+                        pressEvent={this.navigateToScreen('MyProfile')}
+                        IconType={<Icon.User/>}
+                        text="Trang cá nhân"/>
+                </View>
             </View>
-            <View style={styles.screenContainer}>
-                <Item
-                    pressEvent={this.navigateToScreen('Home')}
-                    IconType={<Icon.Globe/>}
-                    text="Trang chủ"/>
-                <Item
-                    pressEvent={this.navigateToScreen('MyProfile')}
-                    IconType={<Icon.User/>}
-                    text="Trang cá nhân"/>
-            </View>
-        </View>
-    )
-  }
+        )
+    }
 }
 
 const styles = StyleSheet.create({

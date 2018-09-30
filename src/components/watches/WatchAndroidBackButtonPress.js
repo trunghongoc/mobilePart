@@ -39,11 +39,12 @@ class WatchAndroidBackButtonPress extends Component {
     }
 
     componentWillUnmount() {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+        // BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
     }
 
     componentDidMount() {
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        // BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+        // console.log('------------------did mount handle press back button')
     }
 
     render = () => null;

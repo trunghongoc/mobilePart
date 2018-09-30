@@ -9,8 +9,8 @@ class Home extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <Segement/>
-                <ScrollListChanel title="Danh sách bạn bè"/>
+                <ScrollListChanel title="Các đài đã đăng ký nhận thông báo"/>
+                <Text>Cái gì vậy mấy má ơi</Text>
             </View>
         );
     }

@@ -38,7 +38,7 @@ class DrawerWithDetect extends Component {
     } 
 
     render() {
-        console.log('..........props:', this.props.navigationReducer.history);
+        // console.log('..........props:', this.props.navigationReducer.history);
         return (
             <DrawerMenu
                 onNavigationStateChange={(prevState, currentState) => {

@@ -14,3 +14,4 @@ export const User = (props) => <Icon name="user" color={props.color || Config.ic
 export const EarphonesAlt = (props) => <Icon name="earphones-alt" color={props.color || Config.icon.color} size={props.size || Config.icon.size} />
 export const Bell = (props) => <Icon name="bell" color={props.color || Config.icon.color} size={props.size || Config.icon.size} />
 export const PieChart = (props) => <Icon name="pie-chart" color={props.color || Config.icon.color} size={props.size || Config.icon.size} />
+export const Trash = (props) => <Icon name="trash" color={props.color || Config.icon.color} size={props.size || Config.icon.size} />

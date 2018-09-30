@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, StatusBar, View} from 'react-native';
+import GlobalContext from './src/contexts/GlobalContext';
+import { contextGlobalState, contextGlobalStaticVar } from './src/contexts/GlobalContext';
 
 import DrawerWithDetect from './src/components/menus/drawer/DrawerWithDetect';
 
@@ -18,13 +20,31 @@ const instructions = Platform.select({
 type Props = {};
 
 export default class App extends Component<Props> {
+  state = {
+    ...contextGlobalState
+  }
+
+  staticContextVar = {
+    ...contextGlobalStaticVar
+  }
+
   render() {
+    const context = {
+      state: this.state,
+      actions: {},
+      static: { ...this.staticContextVar }
+    }
+
+    console.log("============static:", context)
+
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
-          <DrawerWithDetect/>
-        </View>
+        <GlobalContext.Provider value={context}>
+          <View style={styles.container}>
+            <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true}/>
+            <DrawerWithDetect/>
+          </View>
+        </GlobalContext.Provider>
       </Provider>
     );
   }
