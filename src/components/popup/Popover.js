@@ -1,36 +1,68 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Dimensions, Button, TouchableNativeFeedback } from 'react-native';
+import { View, StyleSheet, Text, Dimensions, TouchableNativeFeedback } from 'react-native';
+import PropTypes from 'prop-types';
 import GlobalContext from "../../contexts/GlobalContext";
 import * as Config from './../../configs/Config';
-import * as Icon from '../../icons/SimpleLine';
+import * as Icon from './../../icons/SimpleLine';
+
+const fullWidth = Dimensions.get('window').width - 20;
+const popUpHeight = 180;
+const directionTop = ['topCenter', 'topLeft', 'topRight'];
+const directionBottom = ['bottomCenter', 'bottomLeft', 'bottomRight'];
 
 export default class Popover extends React.Component {
     onYesClick = () => {
         alert("Bạn vừa click vào yes!");
     }
 
+    onNoClick = () => {
+        alert("Bạn vừa click vào NO!");
+    }
+
+    getArrowPos = (_fullWidth) => {
+        const { arrowDirection } = this.props;
+        return {
+            topCenter: { top: -12, left: (_fullWidth - 20) / 2 },
+            topLeft: { top: -12, left: 20 },
+            topRight: { top: -12, left: _fullWidth - 40 },
+
+            bottomCenter: { bottom: -100, left: (_fullWidth - 20) / 2 },
+            bottomLeft: { bottom: -12, left: 20 },
+            bottomRight: { bottom: -12, left: _fullWidth - 40 },
+        }[arrowDirection];
+    }
+
     render() {
-        const { closePopup, direction, popup } = this.props;
+        const { closePopup, arrowDirection, popup, yesButton, noButton, cancelButton, size, arrowCenter } = this.props;
+        const _fullWidth = size.full ? fullWidth : size.width;
+        const boxConfirmSize ={ width: _fullWidth, height: popUpHeight };
+        const boxConfirmFullWidth = { width: _fullWidth };
+        const boxConfirmWidthExeptBorder = { width: _fullWidth - 1 };
+        const boxConfirmWidthIcon = { width: _fullWidth - 15 };
+        const arrowPos = this.getArrowPos(_fullWidth);
 
         return (
             <GlobalContext.Consumer>
             {(context) => (
-                <View style={styles.boxConfirmWrap}>
-                    <View style={styles.boxConfirmWrapNullChild} />
-                    <View style={styles.boxConfirm}>
-                        <View style={[styles.boxConfirmArrow, { left: popup.arrowX }]}>
+                <View style={[styles.boxConfirmWrap, boxConfirmSize]}>
+                    {
+                        directionTop.indexOf(arrowDirection) !== -1  &&
+                        <View style={[styles.boxConfirmWrapNullChild, boxConfirmFullWidth]} />
+                    }
+                    <View style={[styles.boxConfirm, boxConfirmSize]}>
+                        <View style={[styles.boxConfirmArrow, arrowPos]}>
                             <View style={styles.boxConfirmArrowChild}/>
                         </View>
                         {
                             popup.channel !== null ? (
                                 <View style={styles.flex}>
-                                    <View style={styles.popupHeader}>
+                                    <View style={[styles.popupHeader, boxConfirmWidthExeptBorder]}>
                                         <View style={styles.popupHeaderFlex}>
                                             <Text style={styles.headline}>{popup.channel.longName} </Text>
                                         </View>
                                     </View>
                                     <View style={styles.popupBody}>
-                                        <View style={styles.trash}>
+                                        <View style={[styles.trash, boxConfirmWidthIcon]}>
                                             <View style={styles.trashFlex}>
                                                 <View style={styles.trashAround}>
                                                     <Icon.Trash color={Config.white} />
@@ -39,24 +71,47 @@ export default class Popover extends React.Component {
                                         </View>
 
                                         <View style={styles.trashFlex}>
-                                            <Text>Loại bỏ đài này khỏi danh sách nhận thông báo?</Text>
+                                            <Text>Loại bỏ đài này khỏi danh sách nhận thông báo?{_fullWidth}</Text>
                                         </View>
                                     </View>
 
-                                    <View style={[styles.popupHeader, styles.popupFooter]}>
+                                    <View style={[styles.popupHeader, styles.popupFooter, boxConfirmWidthExeptBorder]}>
                                         <View style={styles.popupFooterWrap}>
-                                            <View style={[styles.popupFooterItem, styles.popupFooterItemWithLine]}>
-                                                <TouchableNativeFeedback
-                                                    onPress={this.onYesClick}>
-                                                    <Text style={[styles.headline, styles.mrt8]}>Đồng ý </Text>
-                                                </TouchableNativeFeedback>
-                                            </View>
-                                            <View style={styles.popupFooterItem}>
-                                                <TouchableNativeFeedback
-                                                    onPress={() => closePopup()}>
-                                                    <Text style={[styles.headline, styles.mrt8]}>Đóng hộp thoại </Text>
-                                                </TouchableNativeFeedback>
-                                            </View>
+                                            {
+                                                yesButton &&
+                                                <View style={[styles.popupFooterItem, styles.popupFooterItemWithLine]}>
+                                                    <TouchableNativeFeedback
+                                                        onPress={this.onYesClick}>
+                                                        <View style={styles.popupFooterItemViewFlex}>
+                                                            <Text style={[styles.headline, styles.mrt8]}>Đồng ý </Text>
+                                                        </View>
+                                                    </TouchableNativeFeedback>
+                                                </View>
+                                            }
+
+                                            {
+                                                noButton &&
+                                                <View style={[styles.popupFooterItem, styles.popupFooterItemWithLine]}>
+                                                    <TouchableNativeFeedback
+                                                        onPress={this.onNoClick}>
+                                                        <View style={styles.popupFooterItemViewFlex}>
+                                                            <Text style={[styles.headline, styles.mrt8]}>Không </Text>
+                                                        </View>
+                                                    </TouchableNativeFeedback>
+                                                </View>
+                                            }
+                                            
+                                            {
+                                                cancelButton &&
+                                                <View style={styles.popupFooterItem}>
+                                                    <TouchableNativeFeedback
+                                                        onPress={() => closePopup()}>
+                                                        <View style={styles.popupFooterItemViewFlex}>
+                                                            <Text style={[styles.headline, styles.mrt8]}>Đóng </Text>
+                                                        </View>
+                                                    </TouchableNativeFeedback>
+                                                </View>
+                                            }
                                         </View>
                                     </View>
                                 </View>
@@ -65,6 +120,10 @@ export default class Popover extends React.Component {
                             )
                         }
                     </View>
+                    {
+                        directionBottom.indexOf(arrowDirection) !== -1  &&
+                        <View style={styles.boxConfirmWrapNullChild} />
+                    }
                 </View>
             )}
             </GlobalContext.Consumer>
@@ -72,17 +131,12 @@ export default class Popover extends React.Component {
     }
 }
 
-const fullWidth = Dimensions.get('window').width - 20;
-const popUpHeight = 180;
-
 const styles = StyleSheet.create({
     flex: {
         flex: 1
     },
     boxConfirmWrap: {
         position: 'absolute',
-        width: fullWidth,
-        height: popUpHeight,
         zIndex: 1000,
         backgroundColor: Config.white,
         top: 120,
@@ -90,8 +144,6 @@ const styles = StyleSheet.create({
     },
     boxConfirm: {
         backgroundColor: Config.white,
-        width: fullWidth,
-        height: popUpHeight,
         borderRadius: 4,
         borderWidth: 0.5,
         borderColor: Config.grayM,
@@ -108,7 +160,6 @@ const styles = StyleSheet.create({
         borderRightColor: 'transparent',
         borderBottomColor: Config.grayM,
         position: 'absolute',
-        top: -12,
         zIndex: 100
     },
     boxConfirmArrowChild: {
@@ -126,13 +177,41 @@ const styles = StyleSheet.create({
         top: 0.5,
         left: -10
     },
+    boxConfirmArrowDown: {
+        width: 0,
+        height: 0,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderLeftWidth: 10,
+        borderRightWidth: 10,
+        borderWidth: 12,
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: Config.grayM,
+        position: 'absolute',
+        zIndex: 100
+    },
+    boxConfirmArrowChildDown: {
+        width: 0,
+        height: 0,
+        backgroundColor: 'transparent',
+        borderStyle: 'solid',
+        borderLeftWidth: 10,
+        borderRightWidth: 10,
+        borderWidth: 12,
+        borderLeftColor: 'transparent',
+        borderRightColor: 'transparent',
+        borderBottomColor: Config.white,
+        position: 'absolute',
+        top: 0.5,
+        left: -10
+    },
     boxConfirmWrapNullChild: {
-        width: fullWidth,
         height: 11,
         backgroundColor: Config.white,
+        // backgroundColor: 'red',
     },
     popupHeader: {
-        width: fullWidth - 1,
         height: 40,
         paddingHorizontal: 7,
         paddingTop: 8,
@@ -188,10 +267,43 @@ const styles = StyleSheet.create({
     },
     popupFooterItem: {
         flex: 1,
-        alignItems:'center',
+        // alignItems:'center',
+    },
+    popupFooterItemViewFlex: {
+        flex: 1,
+        alignItems:'center'
     },
     popupFooterItemWithLine: {
         borderRightWidth: 0.5,
         borderRightColor: Config.grayM,
     }
-})
+});
+
+Popover.propTypes = {
+    closePopup: PropTypes.func,
+    arrowDirection: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+    popup: PropTypes.object,
+    yesButton: PropTypes.bool,
+    noButton: PropTypes.bool,
+    cancelButton: PropTypes.bool,
+    size: PropTypes.object,
+    arrowCenter: PropTypes.bool,
+};
+
+Popover.defaultProps = {
+    arrowDirection: 'topCenter',
+    popup: {
+        show: false,
+        arrowX: 30,
+        channel: null
+    },
+    yesButton: true,
+    noButton: true,
+    cancelButton: true,
+    size: {
+        full: true,
+        width: fullWidth,
+        height: popUpHeight
+    },
+    arrowCenter: false
+};

@@ -35,7 +35,7 @@ export default class App extends Component<Props> {
       static: { ...this.staticContextVar }
     }
 
-    console.log("============static:", context)
+    // console.log("============static:", context)
 
     return (
       <Provider store={store}>
